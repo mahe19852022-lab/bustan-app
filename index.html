@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دفتر البستان</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf1e8;--sf:#fff;--ink:#1c2a20;--mute:#64736a;--pri:#2d6a3e;--pri2:#dcebdc;--acc:#c98a0a;--bad:#b3392d;--ln:#d5ddd0;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a15;--sf:#1b261f;--ink:#e6eee7;--mute:#9db0a2;--pri:#6fbf83;--pri2:#24372a;--acc:#e8b84a;--bad:#e8776b;--ln:#2d3d32;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a15;--sf:#1b261f;--ink:#e6eee7;--mute:#9db0a2;--pri:#6fbf83;--pri2:#24372a;--acc:#e8b84a;--bad:#e8776b;--ln:#2d3d32;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 Tajawal,Tahoma,Arial,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+h1{margin:0;font-size:28px;font-weight:800;color:var(--pri)}
+h2{margin:0 0 10px;font-size:19px}
+.sub{color:var(--mute);font-size:14px}
+nav{display:flex;gap:6px;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:5px;margin-bottom:16px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+nav button{flex:1;border:0;background:none;color:var(--mute);font:inherit;font-weight:700;padding:9px 4px;border-radius:10px;cursor:pointer}
+nav button.on{background:var(--pri);color:#fff}
+@media(prefers-color-scheme:dark){nav button.on{color:#0d1a11}}
+.btn{border:0;background:var(--pri);color:#fff;font:inherit;font-weight:700;padding:9px 16px;border-radius:10px;cursor:pointer}
+@media(prefers-color-scheme:dark){.btn{color:#0d1a11}}
+.btn.g{background:var(--pri2);color:var(--pri)}
+.btn.r{background:transparent;color:var(--bad);border:1px solid var(--bad)}
+.btn.s{padding:5px 12px;font-size:14px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.stat{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-size:30px;line-height:1.2;color:var(--pri)}
+.stat.w b{color:var(--bad)}
+.stat span{color:var(--mute);font-size:14px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;margin-bottom:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--ln)}
+.row:first-of-type{border-top:0}
+.chip{display:inline-block;font-size:13px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--pri2);color:var(--pri)}
+.chip.bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.chip.acc{background:color-mix(in srgb,var(--acc) 18%,transparent);color:var(--acc)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tools>*{flex:1 1 140px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:9px 11px}
+label{display:block;font-size:14px;font-weight:700;margin:10px 0 3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.tag{position:relative;background:var(--sf);border:1px solid var(--ln);border-bottom:6px solid var(--sc);border-radius:10px 10px 16px 16px;padding:28px 14px 12px;cursor:pointer;text-align:start;font:inherit;color:inherit}
+.tag::before{content:"";position:absolute;top:9px;left:50%;width:13px;height:13px;margin-left:-6px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 2px var(--ln)}
+.tag .code{font-size:24px;font-weight:800;color:var(--pri);display:block}
+.tag .t{font-weight:700}
+.tag .m{color:var(--mute);font-size:13px}
+.empty{text-align:center;color:var(--mute);padding:28px 10px}
+dialog{border:0;border-radius:18px;padding:18px;width:min(520px,94vw);max-height:92vh;background:var(--bg);color:var(--ink)}
+dialog::backdrop{background:rgba(10,20,12,.55)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.acts .btn{flex:1}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:99px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
+#toast.on{opacity:1}
+.ph{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px}
+.pi{position:relative}
+.pi img{width:100%;height:90px;object-fit:cover;border-radius:10px;cursor:zoom-in;background:var(--pri2);display:block}
+.pi .x{position:absolute;top:4px;left:4px;width:26px;height:26px;border:0;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font:inherit;line-height:1;cursor:pointer}
+.cover{width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:var(--pri2);display:block}
+#lb{background:transparent;padding:0;width:auto;max-width:96vw}
+#lb img{max-width:96vw;max-height:88vh;border-radius:12px;display:block}
+.alert{background:color-mix(in srgb,var(--bad) 14%,var(--sf));border:1px solid var(--bad);color:var(--bad);font-weight:700;border-radius:14px;padding:10px 14px;margin-bottom:12px}
+</style></head>
+<body><div class="wrap">
+<header><div><h1>دفتر البستان</h1><div class="sub">هوية كل شجرة وصحتها وإنتاجها ومواعيد رشّها وتسميدها</div></div>
+<button class="btn g s" onclick="openBackup()">نسخة احتياطية</button></header>
+<nav id="nav"></nav>
+<main id="main"></main>
+</div>
+<dialog id="dlg"></dialog><dialog id="lb" onclick="this.close()"><img id="lbi" alt=""></dialog><div id="toast"></div>
+<script>
+const K='bustan-v1';
+let S={fields:[],trees:[],plans:[],seq:0},tab='home',D=null,P=null,flt={q:'',f:'',s:''},sure='';
+try{const r=localStorage.getItem(K);if(r)S=JSON.parse(r)}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const iso=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*6e4);return z.toISOString().slice(0,10)};
+const today=()=>iso(new Date());
+const addDays=(s,n)=>{const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+n);return iso(d)};
+const diff=(a,b)=>Math.round((new Date(a+'T00:00:00')-new Date(b+'T00:00:00'))/864e5);
+const fmt=s=>new Date(s+'T00:00:00').toLocaleDateString('ar-u-nu-latn',{day:'numeric',month:'long',year:'numeric'});
+const ST={good:['سليمة','var(--pri)'],care:['تحتاج عناية','var(--acc)'],sick:['مريضة','var(--bad)'],dead:['ميتة','var(--mute)']};
+const KIND={spray:'رش مبيد',fert:'تسميد'};
+const fname=id=>(S.fields.find(f=>f.id===id)||{name:'—'}).name;
+const nextOf=p=>p.last?addDays(p.last,+p.every):today();
+const dueTxt=n=>{const d=diff(n,today());return d<0?`متأخرة ${-d} يوم`:d===0?'اليوم':d===1?'غداً':`بعد ${d} يوم`};
+const tone=n=>{const d=diff(n,today());return d<0?'bad':d<=3?'acc':''};
+function target(p){if(p.treeId){const t=S.trees.find(x=>x.id===p.treeId);return t?`${t.code} · ${t.type}`:'—'}return 'كل أشجار '+fname(p.fieldId)}
+function toast(m){const t=$('#toast');t.textContent=m;t.className='on';clearTimeout(toast.h);toast.h=setTimeout(()=>t.className='',2200)}
+function go(t){tab=t;sure='';render()}
+const closeD=()=>$('#dlg').close();
+/* ---- photos (IndexedDB) ---- */
+let db;const PC={};
+const idb=()=>db||(db=new Promise((ok,no)=>{const r=indexedDB.open('bustan-photos',1);r.onupgradeneeded=()=>r.result.createObjectStore('p');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}));
+const pput=async(k,v)=>{const d=await idb();return new Promise((ok,no)=>{const t=d.transaction('p','readwrite');t.objectStore('p').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})};
+const pget=async k=>{const d=await idb();return new Promise((ok,no)=>{const q=d.transaction('p').objectStore('p').get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)})};
+const pdel=async k=>{try{delete PC[k];const d=await idb();d.transaction('p','readwrite').objectStore('p').delete(k)}catch(e){}};
+function shrink(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const r=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*r);c.height=Math.round(im.height*r);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.78))};im.onerror=()=>no(new Error('img'));im.src=u})}
+async function hydrate(){document.querySelectorAll('img[data-ph]').forEach(async im=>{const id=im.dataset.ph;try{PC[id]=PC[id]||await pget(id);if(PC[id])im.src=PC[id]}catch(e){}})}
+async function addPhotos(files){collect();let n=0;for(const f of files){try{const id=uid();const data=await shrink(f);await pput(id,data);PC[id]=data;D.photos.push(id);D.newPh.push(id);n++}catch(e){toast('تعذر حفظ إحدى الصور')}}drawTree();if(n)toast(n+' صورة أُضيفت، اضغط «حفظ» لتثبيتها')}
+function rmPhoto(i){collect();const id=D.photos.splice(i,1)[0];if(D.newPh.includes(id)){D.newPh=D.newPh.filter(x=>x!==id);pdel(id)}else D.rmPh.push(id);drawTree()}
+function zoom(id){if(!PC[id])return;$('#lbi').src=PC[id];$('#lb').showModal()}
+function cancelTree(){(D.newPh||[]).forEach(pdel);closeD()}
+
+function render(){
+  $('#nav').innerHTML=[['home','اللوحة'],['trees','الأشجار'],['plans','المواعيد'],['fields','الحقول']].map(([k,l])=>`<button class="${tab===k?'on':''}" onclick="go('${k}')">${l}</button>`).join('');
+  $('#main').innerHTML=({home:vHome,trees:vTrees,plans:vPlans,fields:vFields})[tab]();hydrate();
+}
+
+function vHome(){
+  const tr=S.trees,sick=tr.filter(t=>t.status==='sick'||t.status==='care').length;
+  const ys=tr.flatMap(t=>t.prod.map(p=>+p.y)),ly=ys.length?Math.max(...ys):null;
+  const kg=ly?tr.reduce((a,t)=>a+t.prod.filter(p=>+p.y===ly).reduce((b,p)=>b+(+p.kg||0),0),0):0;
+  const due=S.plans.map(p=>({p,n:nextOf(p)})).filter(x=>diff(x.n,today())<=14).sort((a,b)=>a.n<b.n?-1:1);
+  const late=due.filter(x=>diff(x.n,today())<0).length;
+  return `${late?`<div class="alert">لديك ${late} مهام متأخرة، نفّذها أو حدّث تاريخها.</div>`:''}
+  <div class="stats">
+   <div class="stat"><b>${tr.length}</b><span>شجرة في ${S.fields.length} حقول</span></div>
+   <div class="stat ${sick?'w':''}"><b>${sick}</b><span>مريضة أو تحتاج عناية</span></div>
+   <div class="stat"><b>${kg}</b><span>كغ إنتاج ${ly??'آخر موسم'}</span></div>
+   <div class="stat ${late?'w':''}"><b>${late}</b><span>مهام متأخرة</span></div></div>
+  <div class="card"><h2>مهام الأسبوعين القادمين</h2>
+  ${due.length?due.map(({p,n})=>`<div class="row"><div><b>${KIND[p.kind]}: ${esc(p.name)}</b><div class="sub">${esc(target(p))}</div><span class="chip ${tone(n)}">${dueTxt(n)}</span></div><button class="btn s" onclick="done('${p.id}')">تم التنفيذ</button></div>`).join(''):`<div class="empty">${S.plans.length?'لا مهام قريبة، كل شيء في موعده.':'لم تضف أي موعد بعد. افتح تبويب المواعيد وأنشئ أول خطة رش أو تسميد.'}</div>`}
+  </div>
+  ${!S.fields.length?`<div class="card"><h2>ابدأ من هنا</h2><div class="sub">أضف حقلك الأول، ثم سجّل أشجاره لتأخذ كل شجرة رقماً خاصاً بها.</div><div class="acts"><button class="btn" onclick="go('fields')">إضافة حقل</button></div></div>`:''}`;
+}
+
+function vTrees(){
+  const l=S.trees.filter(t=>(!flt.f||t.fieldId===flt.f)&&(!flt.s||t.status===flt.s)&&(!flt.q||(t.code+t.type+t.diseases.join(' ')+t.notes).includes(flt.q)));
+  return `<div class="tools"><input id="q" placeholder="بحث بالرقم أو النوع أو المرض" value="${esc(flt.q)}" oninput="flt.q=this.value;redrawList()">
+  <select onchange="flt.f=this.value;render()"><option value="">كل الحقول</option>${S.fields.map(f=>`<option value="${f.id}" ${flt.f===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}</select>
+  <select onchange="flt.s=this.value;render()"><option value="">كل الحالات</option>${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${flt.s===k?'selected':''}>${v[0]}</option>`).join('')}</select>
+  <button class="btn" onclick="openTree()">+ شجرة جديدة</button></div><div id="list">${listHTML(l)}</div>`;
+}
+function listHTML(l){
+  if(!l.length)return `<div class="empty">${S.trees.length?'لا نتائج مطابقة.':'لا توجد أشجار بعد. اضغط «شجرة جديدة» لتسجيل أول شجرة.'}</div>`;
+  return `<div class="grid">${l.map(t=>{const last=t.prod.slice().sort((a,b)=>b.y-a.y)[0];return `<button class="tag" style="--sc:${ST[t.status][1]}" onclick="openTree('${t.id}')">${t.photos&&t.photos[0]?`<img class="cover" data-ph="${t.photos[0]}" alt="">`:''}<span class="code">${esc(t.code)}</span><span class="t">${esc(t.type)}</span><div class="m">${esc(fname(t.fieldId))}${t.year?' · غُرست '+esc(t.year):''}</div><div style="margin-top:6px"><span class="chip ${t.status==='sick'||t.status==='dead'?'bad':t.status==='care'?'acc':''}">${ST[t.status][0]}</span></div>${t.diseases.length?`<div class="m" style="margin-top:6px">الأمراض: ${esc(t.diseases.join('، '))}</div>`:''}${last?`<div class="m">إنتاج ${last.y}: ${last.kg} كغ</div>`:''}</button>`}).join('')}</div>`;
+}
+function redrawList(){const l=S.trees.filter(t=>(!flt.f||t.fieldId===flt.f)&&(!flt.s||t.status===flt.s)&&(!flt.q||(t.code+t.type+t.diseases.join(' ')+t.notes).includes(flt.q)));$('#list').innerHTML=listHTML(l);hydrate()}
+
+function vPlans(){
+  return `<div class="tools"><button class="btn" onclick="openPlan()">+ موعد رش أو تسميد</button></div><div class="card">
+  ${S.plans.length?S.plans.slice().sort((a,b)=>nextOf(a)<nextOf(b)?-1:1).map(p=>{const n=nextOf(p);return `<div class="row"><div><b>${KIND[p.kind]}: ${esc(p.name)}</b><div class="sub">${esc(target(p))} · كل ${p.every} يوم${p.last?' · آخر مرة '+fmt(p.last):''}</div><span class="chip ${tone(n)}">${fmt(n)} (${dueTxt(n)})</span></div><div style="display:flex;gap:6px;flex-direction:column"><button class="btn s" onclick="done('${p.id}')">تم التنفيذ</button><button class="btn g s" onclick="openPlan('${p.id}')">تعديل</button></div></div>`}).join(''):'<div class="empty">لا توجد مواعيد بعد.</div>'}</div>`;
+}
+
+function vFields(){
+  return `<div class="card"><h2>إضافة حقل</h2><div class="tools"><input id="nf" placeholder="اسم الحقل، مثل: حقل الوادي"><button class="btn" onclick="addField()">إضافة</button></div></div>
+  <div class="card">${S.fields.length?S.fields.map(f=>{const n=S.trees.filter(t=>t.fieldId===f.id).length;return `<div class="row"><div><b>${esc(f.name)}</b><div class="sub">${n} شجرة</div></div><button class="btn r s" onclick="delField('${f.id}')">${sure===f.id?'اضغط للتأكيد':'حذف'}</button></div>`}).join(''):'<div class="empty">لا توجد حقول بعد.</div>'}</div>`;
+}
+function addField(){const v=$('#nf').value.trim();if(!v)return toast('اكتب اسم الحقل');S.fields.push({id:uid(),name:v});save();render();toast('تمت إضافة الحقل')}
+function delField(id){if(sure!==id){sure=id;return render()}S.trees.filter(t=>t.fieldId===id).forEach(t=>(t.photos||[]).forEach(pdel));S.trees=S.trees.filter(t=>t.fieldId!==id);S.plans=S.plans.filter(p=>p.fieldId!==id);S.fields=S.fields.filter(f=>f.id!==id);sure='';save();render();toast('تم حذف الحقل وأشجاره')}
+function done(id){const p=S.plans.find(x=>x.id===id);p.last=today();save();render();toast(`سُجّل التنفيذ، الموعد القادم ${fmt(nextOf(p))}`)}
+
+/* ---- tree dialog ---- */
+function collect(){D.code=$('#f_code').value.trim();D.fieldId=$('#f_field').value;D.type=$('#f_type').value.trim();D.year=$('#f_year').value;D.status=$('#f_status').value;D.diseases=$('#f_dis').value.split(/[,،]/).map(s=>s.trim()).filter(Boolean);D.notes=$('#f_notes').value}
+function openTree(id){
+  if(!S.fields.length){toast('أضف حقلاً أولاً');return go('fields')}
+  const t=S.trees.find(x=>x.id===id);
+  D=t?JSON.parse(JSON.stringify(t)):{id:null,code:'ش-'+String(S.seq+1).padStart(3,'0'),fieldId:flt.f||S.fields[0].id,type:'',year:'',status:'good',diseases:[],notes:'',prod:[],photos:[]};
+  D.photos=D.photos||[];D.newPh=[];D.rmPh=[];
+  drawTree();$('#dlg').showModal();
+}
+function drawTree(){drawTree0();hydrate()}
+function drawTree0(){
+  const rel=D.id?S.plans.filter(p=>p.treeId===D.id||(!p.treeId&&p.fieldId===D.fieldId)):[];
+  $('#dlg').innerHTML=`<h2>${D.id?'بطاقة الشجرة':'شجرة جديدة'}</h2>
+  <div class="two"><div><label>رقم الهوية</label><input id="f_code" value="${esc(D.code)}"></div><div><label>الحقل</label><select id="f_field">${S.fields.map(f=>`<option value="${f.id}" ${f.id===D.fieldId?'selected':''}>${esc(f.name)}</option>`).join('')}</select></div></div>
+  <div class="two"><div><label>النوع</label><input id="f_type" list="types" value="${esc(D.type)}" placeholder="زيتون، نخيل..."><datalist id="types">${['زيتون','نخيل','برتقال','ليمون','تين','رمان','عنب','لوز','مشمش','تفاح','خوخ'].map(x=>`<option>${x}</option>`).join('')}</datalist></div><div><label>سنة الغرس</label><input id="f_year" type="number" value="${esc(D.year)}" placeholder="2018"></div></div>
+  <label>الحالة</label><select id="f_status">${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${D.status===k?'selected':''}>${v[0]}</option>`).join('')}</select>
+  <label>الأمراض (افصل بينها بفاصلة)</label><input id="f_dis" value="${esc(D.diseases.join('، '))}" placeholder="عين الطاووس، سوسة...">
+  <label>ملاحظات</label><textarea id="f_notes" rows="2">${esc(D.notes)}</textarea>
+  <label>الصور (${D.photos.length})</label>
+  ${D.photos.length?`<div class="ph">${D.photos.map((id,i)=>`<div class="pi"><img data-ph="${id}" onclick="zoom('${id}')" alt="صورة الشجرة"><button class="x" onclick="rmPhoto(${i})" aria-label="حذف الصورة">×</button></div>`).join('')}</div>`:'<div class="sub">لا توجد صور لهذه الشجرة بعد.</div>'}
+  <input id="pf" type="file" accept="image/*" multiple hidden onchange="addPhotos(this.files)">
+  <div class="acts" style="margin-top:6px"><button class="btn g" onclick="$('#pf').click()">+ إضافة صور</button></div>
+  <label>الإنتاج حسب الموسم</label>
+  ${D.prod.sort((a,b)=>b.y-a.y).map((p,i)=>`<div class="row" style="padding:5px 0"><span>${p.y}: <b>${p.kg}</b> كغ</span><button class="btn r s" onclick="rmProd(${i})">حذف</button></div>`).join('')}
+  <div class="two" style="margin-top:6px"><input id="p_y" type="number" placeholder="السنة" value="${new Date().getFullYear()}"><input id="p_kg" type="number" placeholder="الكمية بالكغ"></div>
+  <div class="acts" style="margin-top:6px"><button class="btn g" onclick="addProd()">+ إضافة إنتاج</button></div>
+  ${rel.length?`<label>مواعيد هذه الشجرة</label>${rel.map(p=>{const n=nextOf(p);return `<div class="row" style="padding:5px 0"><span>${KIND[p.kind]}: ${esc(p.name)}</span><span class="chip ${tone(n)}">${dueTxt(n)}</span></div>`}).join('')}`:''}
+  <div class="acts"><button class="btn" onclick="saveTree()">حفظ</button><button class="btn g" onclick="cancelTree()">إغلاق</button>${D.id?`<button class="btn r" onclick="delTree()" id="dt">حذف الشجرة</button>`:''}</div>`;
+}
+function addProd(){collect();const y=$('#p_y').value,kg=$('#p_kg').value;if(!y||kg==='')return toast('أدخل السنة والكمية');D.prod=D.prod.filter(p=>String(p.y)!==y);D.prod.push({y:+y,kg:+kg});drawTree()}
+function rmProd(i){collect();D.prod.splice(i,1);drawTree()}
+function saveTree(){collect();if(!D.type)return toast('اكتب نوع الشجرة');if(!D.code)return toast('اكتب رقم الهوية');
+  if(S.trees.some(t=>t.code===D.code&&t.id!==D.id))return toast('رقم الهوية مستخدم لشجرة أخرى');
+  (D.rmPh||[]).forEach(pdel);delete D.newPh;delete D.rmPh;
+  if(!D.id){D.id=uid();S.seq++;S.trees.push(D)}else S.trees[S.trees.findIndex(t=>t.id===D.id)]=D;
+  save();closeD();render();toast('تم حفظ الشجرة')}
+function delTree(){const b=$('#dt');if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='اضغط للتأكيد';return}
+  const old=S.trees.find(t=>t.id===D.id);((old&&old.photos)||[]).concat(D.newPh||[]).forEach(pdel);
+  S.trees=S.trees.filter(t=>t.id!==D.id);S.plans=S.plans.filter(p=>p.treeId!==D.id);save();closeD();render();toast('تم حذف الشجرة')}
+
+/* ---- plan dialog ---- */
+function openPlan(id){
+  if(!S.fields.length){toast('أضف حقلاً أولاً');return go('fields')}
+  P=id?{...S.plans.find(p=>p.id===id)}:{id:null,kind:'spray',name:'',fieldId:S.fields[0].id,treeId:'',every:30,last:''};
+  const cur=P.treeId?'t:'+P.treeId:'f:'+P.fieldId;
+  $('#dlg').innerHTML=`<h2>${id?'تعديل الموعد':'موعد جديد'}</h2>
+  <label>النوع</label><select id="pk"><option value="spray" ${P.kind==='spray'?'selected':''}>رش مبيد</option><option value="fert" ${P.kind==='fert'?'selected':''}>تسميد</option></select>
+  <label>اسم المبيد أو السماد</label><input id="pn" value="${esc(P.name)}" placeholder="مثال: نحاس، NPK 20-20-20">
+  <label>يشمل</label><select id="pt"><optgroup label="كل أشجار حقل">${S.fields.map(f=>`<option value="f:${f.id}" ${cur==='f:'+f.id?'selected':''}>${esc(f.name)}</option>`).join('')}</optgroup><optgroup label="شجرة واحدة">${S.trees.map(t=>`<option value="t:${t.id}" ${cur==='t:'+t.id?'selected':''}>${esc(t.code)} · ${esc(t.type)}</option>`).join('')}</optgroup></select>
+  <div class="two"><div><label>التكرار كل (يوم)</label><input id="pe" type="number" min="1" value="${P.every}"></div><div><label>آخر تنفيذ (اختياري)</label><input id="pl" type="date" value="${P.last||''}"></div></div>
+  <div class="sub" style="margin-top:6px">إن تركت آخر تنفيذ فارغاً يُعد الموعد مستحقاً اليوم.</div>
+  <div class="acts"><button class="btn" onclick="savePlan()">حفظ</button><button class="btn g" onclick="closeD()">إغلاق</button>${id?`<button class="btn r" id="dp" onclick="delPlan()">حذف</button>`:''}</div>`;
+  $('#dlg').showModal();
+}
+function savePlan(){const n=$('#pn').value.trim(),e=+$('#pe').value;if(!n)return toast('اكتب اسم المبيد أو السماد');if(!(e>0))return toast('أدخل عدد أيام صحيحاً');
+  const [k,v]=$('#pt').value.split(':');
+  P.kind=$('#pk').value;P.name=n;P.every=e;P.last=$('#pl').value;
+  if(k==='t'){P.treeId=v;P.fieldId=(S.trees.find(t=>t.id===v)||{}).fieldId}else{P.treeId='';P.fieldId=v}
+  if(!P.id){P.id=uid();S.plans.push(P)}else S.plans[S.plans.findIndex(x=>x.id===P.id)]=P;
+  save();closeD();render();toast('تم حفظ الموعد')}
+function delPlan(){const b=$('#dp');if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='اضغط للتأكيد';return}
+  S.plans=S.plans.filter(p=>p.id!==P.id);save();closeD();render();toast('تم حذف الموعد')}
+
+/* ---- backup ---- */
+function openBackup(){
+  $('#dlg').innerHTML=`<h2>نسخة احتياطية</h2><div class="sub">بياناتك محفوظة في هذا المتصفح فقط. انسخ النص أدناه واحفظه في مكان آمن، ولاستعادته الصقه هنا ثم اضغط «استعادة». ملاحظة: الصور لا تدخل في النسخة الاحتياطية، وتبقى محفوظة في هذا المتصفح فقط.</div>
+  <label>البيانات</label><textarea id="bk" rows="8" style="direction:ltr;font-size:12px">${esc(JSON.stringify(S))}</textarea>
+  <div class="acts"><button class="btn" onclick="restore()">استعادة</button><button class="btn g" onclick="closeD()">إغلاق</button></div>`;
+  $('#dlg').showModal();
+}
+function restore(){try{const d=JSON.parse($('#bk').value);if(!d.fields||!d.trees||!d.plans)throw 0;S=d;save();closeD();render();toast('تمت الاستعادة')}catch(e){toast('النص غير صالح')}}
+render();
+</script></body></html>
