@@ -1,0 +1,14 @@
+{
+  "background_color": "#54d118",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "دفتر البستان",
+  "orientation": "natural",
+  "scope": "/",
+  "short_name": "دفتر البستان",
+  "start_url": "/",
+  "theme_color": "#33c2be",
+  "id": "دفتر البستان",
+  "description": "لادارة حقول صغيرة",
+  "lang": "ar"
+}
